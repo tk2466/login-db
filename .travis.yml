@@ -1,0 +1,21 @@
+
+language: python
+python:
+ - "3.6"
+
+
+before_install: sudo apt-get update
+
+install:
+ - sudo apt-get install python3-pip
+ - sudo apt-get install python2.7
+ - python3 -m pip install flask
+ - pip install tox-travis
+ - pip install -r requirements.txt
+ - pip install flask
+ - pip install -U pytest
+
+script:
+ - flask run &
+ - tox
+
