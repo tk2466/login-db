@@ -36,7 +36,7 @@ def setup_db():
         salt = token_hex(nbytes=16)
         hasher.update(salt.encode('utf-8'))
         passwordhash = hasher.hexdigest()
-        mfa = "12345678910"
+        mfa = "12345678901"
         new_user = Users(uname=uname, pword=passwordhash, mfa=mfa, salt=salt)
         session.add(new_user)
         session.commit()
@@ -235,7 +235,6 @@ def spell_check():
 
 # Logout Page
 @app.route("/logout")
-@login_required
 def logout():
     user = flask_login.current_user.id
     logout_user()
@@ -250,7 +249,6 @@ def logout():
 
 # Hisotry Record Page
 @app.route('/history', methods=['GET', 'POST'])
-@login_required
 def history():
     form = HistoryForm()
     user = flask_login.current_user.id
@@ -269,7 +267,6 @@ def history():
 
 # Hisotry Record Page
 @app.route('/history/query<int:queryid>')
-@login_required
 def history_query(queryid):
     form = HistoryForm()
     user = flask_login.current_user.id
@@ -287,7 +284,6 @@ def history_query(queryid):
 
 # Hisotry Record Page
 @app.route('/login_history', methods=['GET', 'POST'])
-@login_required
 def login_history():
     queries = None
     form = LoginHistoryForm()
@@ -298,7 +294,8 @@ def login_history():
         queryuser = form.userid.data
         DBSessionMaker = setup_db()
         session = DBSessionMaker()
-        queries = session.query(LoginRecord).filter(LoginRecord.user_id == queryuser)
+        username = session.query(Users).filter(Users.user_id == queryuser).first()
+        queries = session.query(LoginRecord).filter(LoginRecord.user_id == username.uname)
         session.close()
     response = make_response(render_template('login_history.html', form=form, user = user, queries=queries))
     response.headers['Content-Security-Policy'] = "default-src 'self'"
