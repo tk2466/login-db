@@ -1,0 +1,28 @@
+<html>
+
+
+<body>
+	
+		<h1>Register</h1>
+		<br>
+		{% from "_formhelpers.html" import render_field %}
+		<form method="post">
+			{{ form.hidden_tag() }}
+			<dl>
+				{{  render_field(form.uname, id="uname")  }}
+				{{  render_field(form.pword, id="pword")  }}
+				{{  render_field(form.mfa, id="2fa")  }}
+
+			
+			</dl>
+			<p><input type=submit value=Register></p>
+		{% if success %}
+		<p id="success">{{ success }}</p>
+		{% endif %}
+		</form>
+
+
+	
+</body>
+</html>
+ 

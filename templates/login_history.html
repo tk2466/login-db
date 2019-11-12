@@ -1,0 +1,31 @@
+
+<html>
+<body>
+	
+		<h1>Login History</h1>
+		<br>
+		{% from "_formhelpers.html" import render_field %}
+		<form method=post>
+		{{ form.hidden_tag() }}
+			{% if (user == "admin") %}
+				<dl>
+				{{ render_field(form.userid, id="userid") }}	
+				</dl>
+				<p><input type=submit value=Submit></p>
+				{% if queries != None %}
+					{% for row in queries %}
+					
+						<li id="login{{ row.record_number }}_time">{{ row.time_on }}</li>
+						{% if row.time_off != None %}
+							<li id="logout{{ row.record_number }}_time">{{ row.time_off }}</li>
+						{% else %}
+							<li id="logout{{ row.record_number }}_time">"N/A"</li>
+						{% endif %}
+						<br><br>	
+					{% endfor %}
+				{% endif %}
+			{% endif %}
+		</form>
+	
+</body>
+</html>

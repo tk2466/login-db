@@ -1,0 +1,19 @@
+
+<html>
+<body>
+	
+		<h1>History\Query</h1>
+		<br>
+		{% from "_formhelpers.html" import render_field %}
+		<form method=post>
+		{{ form.hidden_tag() }}
+			<p id=queryid>Query ID: {{ queries.record_number }} </p>
+			<p id="username">User: {{ queries.user_id }}</p>
+			<p id="querytext">Number of queries: {{ queries.query_text }}</p>
+			<p id="queryresults">Query results: {{ queries.query_result }}</p>
+			<br>
+		</form>
+	
+</body>
+</html>
+

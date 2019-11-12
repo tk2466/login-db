@@ -1,0 +1,26 @@
+
+<html>
+<body>
+	
+		<h1>History</h1>
+		<br>
+		{% from "_formhelpers.html" import render_field %}
+		<form method=post>
+		{{ form.hidden_tag() }}
+			{% if (user == "admin") %}
+				<dl>
+				{{ render_field(form.userquery, id="userquery") }}
+				<p><input type=submit value=Submit></p>
+				</dl>
+			{% endif %}
+			<p id="user">User: {{ user }}</p>
+			<p id="numqueries">Number of queries: {{ numqueries }}</p>
+			<br>
+			{% for row in queries %}
+			<p id="query{{ row.record_number }}"><a href="{{ url_for('history_query', queryid=row.record_number) }}">"query{{ row.record_number }}"</a></p>
+			{% endfor %}
+		</form>
+	
+</body>
+</html>
+
